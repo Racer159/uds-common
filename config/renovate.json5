@@ -62,7 +62,21 @@
             "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}",
             "datasourceTemplate": "docker"
         },
-        // Matches individual helm charts in a `zarf.yaml`'s `charts:` section that specify `version` then `url` 
+        // Matches individual helm repo charts in a `zarf.yaml`'s `charts:` section that specify `version` then `url` 
+        {
+            "fileMatch": [ "(^|/)zarf\\.ya?ml$" ],
+            "matchStringsStrategy": "recursive",
+            "matchStrings": [
+                // Match the chart section. Test: https://regex101.com/r/1DL0tI/3
+                "(?m)charts:(.|\\n)*?(^\\s{4}[\\w:]+|\\n$|^\\s{2}-)",
+                // Match a chart entry. Test: https://regex101.com/r/ibpxYd/1
+                "(?m)name:(.|\\n)+?(^\\s{4}[\\w\\-:]+|\\n$|^\\s{2}-|^\\s{6}-)",
+                // Match the parts of a chart entry. Test: https://regex101.com/r/nruXFi/1
+                "(?m)name: [\"']?(?<depName>.+?)[\"']?$(.|\\n)*?version: [\"']?(?<currentValue>.+?)[\"']?$(.|\\n)*?url: [\"']?(?<registryUrl>.+?)[\"']?$"
+            ],
+            "datasourceTemplate": "helm"
+        },
+        // Matches individual helm repo charts in a `zarf.yaml`'s `charts:` section that specify `url` then `version` 
         {
             "fileMatch": [ "(^|/)zarf.yaml$" ],
             "matchStringsStrategy": "recursive",
@@ -76,7 +90,7 @@
             ],
             "datasourceTemplate": "helm"
         },
-        // Matches individual git charts in a `zarf.yaml`'s `charts:` section that specify `version` then `url` 
+        // Matches individual helm git charts in a `zarf.yaml`'s `charts:` section that specify `version` then `url` 
         {
             "fileMatch": [ "(^|/)zarf\\.ya?ml$" ],
             "matchStringsStrategy": "recursive",
@@ -90,7 +104,7 @@
             ],
             "datasourceTemplate": "git-tags"
         },
-        // Matches individual git charts in a `zarf.yaml`'s `charts:` section that specify `url` then `version` 
+        // Matches individual helm git charts in a `zarf.yaml`'s `charts:` section that specify `url` then `version` 
         {
             "fileMatch": [ "(^|/)zarf.yaml$" ],
             "matchStringsStrategy": "recursive",
