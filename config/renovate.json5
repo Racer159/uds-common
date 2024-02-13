@@ -71,10 +71,8 @@
                 "(?m)charts:(.|\\n)*?(^\\s{4}[\\w:]+|\\n$|^\\s{2}-)",
                 // Match a chart entry. Test: https://regex101.com/r/ibpxYd/1
                 "(?m)name:(.|\\n)+?(^\\s{4}[\\w\\-:]+|\\n$|^\\s{2}-|^\\s{6}-)",
-                // See if gitPath is in the chart entry. Test: https://regex101.com/r/xPzyGQ/2
-                "(?m)((.|\\n)*(?<git>gitPath:)(.|\\n)*|(.|\\n)*)",
                 // Test: https://regex101.com/r/nruXFi/1
-                "(?m)name: [\"']?(?<depName>.+?)[\"']?$(.|\\n)*?version: [\"']?(?<currentValue>.+?)[\"']?$(.|\\n)*?url: [\"']?(?<oci>oci:\\/\\/)?(?<registryUrl>.+?)[\"']?$"
+                "(?m)name: [\"']?(?<depName>.+?)[\"']?$(.|\\n)*?version: [\"']?(?<currentValue>.+?)[\"']?$(.|\\n)*?url: [\"']?(?<oci>oci:\\/\\/)?(?<registryUrl>.+?(?<git>\\.git)?)[\"']?$"
             ],
             "datasourceTemplate": "{{#if oci}}docker{{else}}{{#if git}}git-tags{{else}}helm{{/if}}{{/if}}"
         },
@@ -87,10 +85,8 @@
                 "(?m)charts:(.|\\n)*?(^\\s{4}[\\w:]+|\\n$|^\\s{2}-)",
                 // Match a chart entry. Test: https://regex101.com/r/ibpxYd/1
                 "(?m)name:(.|\\n)+?(^\\s{4}[\\w\\-:]+|\\n$|^\\s{2}-|^\\s{6}-)",
-                // See if gitPath is in the chart entry. Test: https://regex101.com/r/xPzyGQ/2
-                "(?m)((.|\\n)*(?<git>gitPath:)(.|\\n)*|(.|\\n)*)",
                 // Match the parts of a chart entry. Test: https://regex101.com/r/iqP5RJ/1
-                "(?m)name: [\"']?(?<depName>.+?)[\"']?$(.|\\n)*?url: [\"']?(?<oci>oci:\\/\\/)?(?<registryUrl>.+?)[\"']?$(.|\\n)*?version: [\"']?(?<currentValue>.+?)[\"']?$"
+                "(?m)name: [\"']?(?<depName>.+?)[\"']?$(.|\\n)*?url: [\"']?(?<oci>oci:\\/\\/)?(?<registryUrl>.+?(?<git>\\.git)?)[\"']?$(.|\\n)*?version: [\"']?(?<currentValue>.+?)[\"']?$"
             ],
             "datasourceTemplate": "{{#if oci}}docker{{else}}{{#if git}}git-tags{{else}}helm{{/if}}{{/if}}"
         }
