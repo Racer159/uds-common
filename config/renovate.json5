@@ -122,8 +122,8 @@
                 "(?m)name:(.|\\n)*?version: [\"']?(?<currentValue>.+?)[\"']?$(.|\\n)*?url: [\"']?(?<depName>.+?\\.git)[\"']?$"
             ],
             "datasourceTemplate": "git-tags",
-            // Match the version from the tag. Test: https://regex101.com/r/WXOleB/1
-            "versioningTemplate": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(-[\\w\\.]+(?<build>\\d+))?"
+            // Match the version from the tag. Test: https://regex101.com/r/dzQZiE/1
+            "versioningTemplate": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(-[\\w\\.]+\\.(?<build>\\d+))?"
         },
         // Matches individual helm git charts in a `zarf.yaml`'s `charts:` section that specify `url` then `version` 
         {
@@ -138,8 +138,8 @@
                 "(?m)name:(.|\\n)*?url: [\"']?(?<depName>.+?\\.git)[\"']?$(.|\\n)*?version: [\"']?(?<currentValue>.+?)[\"']?$"
             ],
             "datasourceTemplate": "git-tags",
-            // Match the version from the tag. Test: https://regex101.com/r/WXOleB/1
-            "versioningTemplate": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(-[\\w\\.]+(?<build>\\d+))?"
+            // Match the version from the tag. Test: https://regex101.com/r/dzQZiE/1
+            "versioningTemplate": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(-[\\w\\.]+\\.(?<build>\\d+))?"
         },
         // Matches individual helm oci charts in a `zarf.yaml`'s `charts:` section that specify `version` then `url` 
         {
