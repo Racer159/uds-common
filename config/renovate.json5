@@ -209,7 +209,7 @@
             "allowedVersions": "!/8.4/"
         },
         {
-            "matchFileNames": [".github/**"],
+            "matchDatasources": ["github-actions"],
             "excludePackageNames": ["defenseunicorns/uds-cli"],
             "groupName": "githubactions",
             "commitMessageTopic": "githubactions",
