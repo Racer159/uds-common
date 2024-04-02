@@ -4,15 +4,12 @@
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
         ":dependencyDashboard",
-        ":semanticPrefixFixDepsChoreOthers",
         "config:base",
-        "group:all",
-        "replacements:all",
-        "workarounds:all"
     ],
+    // Disable reviewers getting added by renovate to limit notification noise
+    "reviewersFromCodeOwners": false,
     "timezone": "America/New_York",
     "rebaseStalePrs": true,
-    "schedule": ["after 7am and before 9am every weekday"],
     "dependencyDashboard": true,
     "dependencyDashboardTitle": "Renovate Dashboard 🤖",
     "rebaseWhen": "conflicted",
@@ -22,10 +19,10 @@
         "enabled": true
     },
     "helm-values": {
-        "fileMatch": ["./.+\\.yaml$"]
+        "fileMatch": [".*\\.ya?ml$"]
     },
     "kubernetes": {
-        "fileMatch": ["\\.yaml$"],
+        "fileMatch": [".*\\.ya?ml$"],
         "ignorePaths": [
             ".github"
         ]
@@ -59,6 +56,16 @@
             ],
             "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
             "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}"
+        },
+        // Matches specified datasources where an environment variable separates the version on the following line (i.e. https://github.com/defenseunicorns/uds-common/blob/ce3ba974ef3ff88058809f4b9a78da281a65ffa0/.github/actions/setup/action.yaml#L9)
+        {
+            "fileMatch": [".*\\.ya?ml$"],
+            "matchStrings": [
+                // Test: https://regex101.com/r/b53bEF/2
+                "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?( extractVersion=(?<extractVersion>.*?))?( registryUrl=(?<registryUrl>.*?))?\\s.*[A-Z]+=['\"]?(?<currentValue>[v0-9].*?)['\"]?(\\s|$)"
+            ],
+            "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
+            "extractVersionTemplate": "^v(?<version>.*)$"
         },
         // Matches specified datasources for brew where an @ separates the version on the following line (i.e. https://github.com/defenseunicorns/uds-core/blob/5a2666f6a5ba89686c6dc1fecb0db98512b1b9f8/.github/actions/setup/action.yaml#L32)
         {
@@ -169,6 +176,21 @@
             ],
             "datasourceTemplate": "docker"
         },
+        // Matches individual kustomizations in a `zarf.yaml`'s `manifests:` section using a github url with a ref
+        {
+            "fileMatch": [ "(^|/)zarf\\.ya?ml$" ],
+            "matchStringsStrategy": "recursive",
+            "matchStrings": [
+                // Match the manifests section. Test: https://regex101.com/r/BCfsGu/1
+                "(?m)manifests:(.|\\n)*?(^\\s{4}[\\w:]+|\\n$|^\\s{2}-)",
+                // Match a manifests entry. Test: https://regex101.com/r/UjQa51/1
+                "(?m)name:(.|\\n)+?(^\\s{4}[\\w\\-:]+|\\n$|^\\s{2}-|^\\s{6}-)",
+                // Match the parts of a chart entry. Test: https://regex101.com/r/cumJ2Y/1
+                "(?m)name:(.|\\n)*?kustomizations:(.|\n)*?- [\"']?github.com\\/(?<depName>.+?)\\/\\/.*\\?ref=(?<currentValue>.+?)[\"']?$"
+            ],
+            "versioningTemplate": "semver-coerced",
+            "datasourceTemplate": "github-tags"
+        },
         // Matches oci packages in a `uds-bundle.yaml`'s `zarf-packages:` section that specify `repository` then `ref` 
         {
             "fileMatch": [ "(^|/)uds-bundle.yaml$" ],
@@ -185,6 +207,13 @@
         {
             "matchPackageNames": ["registry1.dso.mil/ironbank/big-bang/base"],
             "allowedVersions": "!/8.4/"
+        },
+        {
+            "matchFileNames": [".github/**"],
+            "excludePackageNames": ["defenseunicorns/uds-cli"],
+            "groupName": "githubactions",
+            "commitMessageTopic": "githubactions",
+            "pinDigests": true
         }
     ]
 }
