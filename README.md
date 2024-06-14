@@ -15,9 +15,9 @@ Pinning to a specific tag of a task (rather than `main`) with renovate watching 
 
 ## Supported Tool Versions
 
-- UDS CLI: 0.10.1
-- UDS Core: 0.17.0
-- K3D: 5.6.0
+- UDS CLI: 0.11.2
+- UDS Core: 0.22.2
+- K3D: 5.6.3
 
 NOTE: Zarf is not required for tasks in this repo, the vendored zarf (`uds zarf`) included with UDS CLI is used instead to prevent version mismatches.
 
