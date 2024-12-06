@@ -73,10 +73,16 @@
         // Matches specified datasources where a colon separates the version on the following line (i.e. https://github.com/defenseunicorns/zarf/blob/7e91d3b9823b52fe6d0f563d692c8af57faa6005/examples/big-bang/zarf.yaml#L5)
         {
             "fileMatch": [".*\\.ya?ml$"],
+            "matchStringsStrategy": "recursive",
             "matchStrings": [
                 // Test: https://regex101.com/r/d9t0lt/1
-                "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?( extractVersion=(?<extractVersion>.*?))?( registryUrl=(?<registryUrl>.*?))?\\s.*:\\s*['\"]?(?<currentValue>[v0-9].*?)['\"]?(\\s|$)"
+                "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?( suffix=(?<suffix>.*?))?( extractVersion=(?<extractVersion>.*?))?( registryUrl=(?<registryUrl>.*?))?\\s.*:\\s*['\"]?[v0-9].*?['\"]?(\\s|$)",
+                // Test: https://regex101.com/r/Aj2lH1/1
+                ":\\s*['\"]?[v0-9].*?['\"]?(\\s|$)",
+                // Test: https://regex101.com/r/W2uC15/1
+                "(?<currentValue>[v0-9][^\\n\\"\\s]*)"
             ],
+            "autoReplaceStringTemplate": "{{{newValue}}}{{#if suffix}}{{{suffix}}}{{/if}}",
             "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
             "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}"
         },
