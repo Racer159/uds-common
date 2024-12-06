@@ -4,10 +4,10 @@
 flavors:
   - name: upstream
     # renovate: datasource=docker depName=nginx versioning=semver-coerced
-    version: 1.27.1
+    version: 1.27.3
   - name: registry1
     # renovate: datasource=docker depName=registry1.dso.mil/ironbank/opensource/nginx/nginx versioning=semver-coerced
-    version: 1.27.1
+    version: 1.27.3
   - name: unicorn
     # renovate: datasource=docker depName=cgr.dev/du-uds-defenseunicorns/nginx versioning=semver-coerced
-    version: 1.27.1
+    version: 1.27.3
