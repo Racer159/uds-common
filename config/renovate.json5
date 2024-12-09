@@ -80,9 +80,9 @@
                 // Test: https://regex101.com/r/Aj2lH1/1
                 ":\\s*['\"]?[v0-9].*?['\"]?(\\s|$)",
                 // Test: https://regex101.com/r/W2uC15/1
-                "(?<currentValue>[v0-9][^\\n\\\"\\s]*)"
+                "(?<currentValue>[v0-9][^\\n\\\"\\s]*)-uds\\.\\d+"
             ],
-            "autoReplaceStringTemplate": "{{{newValue}}}{{#if newDigest}}@{{{newDigest}}}{{/if}}",
+            "autoReplaceStringTemplate": "{{{newValue}}}-uds.0",
             "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
             "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}"
         },
