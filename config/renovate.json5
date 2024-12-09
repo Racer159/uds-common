@@ -76,13 +76,13 @@
             "matchStringsStrategy": "recursive",
             "matchStrings": [
                 // Test: https://regex101.com/r/d9t0lt/1
-                "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?( suffix=(?<suffix>.*?))?( extractVersion=(?<extractVersion>.*?))?( registryUrl=(?<registryUrl>.*?))?\\s.*:\\s*['\"]?[v0-9].*?['\"]?(\\s|$)",
+                "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?( extractVersion=(?<extractVersion>.*?))?( registryUrl=(?<registryUrl>.*?))?\\s.*:\\s*['\"]?[v0-9].*?['\"]?(\\s|$)",
                 // Test: https://regex101.com/r/Aj2lH1/1
                 ":\\s*['\"]?[v0-9].*?['\"]?(\\s|$)",
                 // Test: https://regex101.com/r/W2uC15/1
                 "(?<currentValue>[v0-9][^\\n\\\"\\s]*)"
             ],
-            "autoReplaceStringTemplate": "{{{newValue}}}{{#if suffix}}{{{suffix}}}{{/if}}{{#if newDigest}}@{{{newDigest}}}{{/if}}",
+            "autoReplaceStringTemplate": "{{{newValue}}}-uds.0{{#if newDigest}}@{{{newDigest}}}{{/if}}",
             "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}",
             "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^(?<version>.*)${{/if}}"
         },
