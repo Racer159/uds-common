@@ -37,12 +37,6 @@
             ".github"
         ]
     },
-    "packageRules": [
-        {
-            "matchDatasources": ["crate", "rubygems", "docker", "github-releases", "terraform-provider", "github-tags", "go", "maven", "npm", "nuget", "pypi", "jsr"],
-            "minimumReleaseAge": "3 days"
-        }
-    ],
     "customManagers": [
         // Matches github-tags pointing to items in githubusercontent (i.e. https://github.com/defenseunicorns/uds-core/blob/e45de0e5917a2ca6c3e30e593e2d9a8d393849a9/.vscode/settings.json#L12)
         {
@@ -368,6 +362,14 @@
             "registryUrls": [
                 "https://registry.opentofu.org"
             ]
+        },
+        // Sets a minimum release age for all datasources with timestamps except defenseunicorns maintained packages
+        {
+            "matchDatasources": ["crate", "rubygems", "docker", "github-releases", "terraform-provider", "github-tags", "go", "maven", "npm", "nuget", "pypi", "jsr"],
+            "matchPackageNames": ["!pepr", "!defenseunicorns/**", "!zarf-dev/**", "!github.com/defenseunicorns/**", "!github.com/zarf-dev/**", "!ghcr.io/defenseunicorns/*", "!ghcr.io/zarf-dev/*", "!registry.defenseunicorns.com/**"],
+            "minimumReleaseAge": "3 days",
+            "internalChecksFilter": "strict",
+            "prCreation": "not-pending"
         }
     ]
 }
