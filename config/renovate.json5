@@ -43,28 +43,6 @@
             "minimumReleaseAge": "3 days"
         }
     ],
-    "hostRules": [
-        {
-            "matchHost": "registry1.dso.mil",
-            "hostType": "docker",
-            "description": "Encrypted creds for registry1, scoped to this Github org using: https://docs.renovatebot.com/getting-started/migrating-secrets/#migrate-your-secrets-in-encrypted-form",
-            "username": "{{ secrets.IRONBANK_USERNAME }}",
-            "password": "{{ secrets.IRONBANK_PASSWORD }}"
-        },
-        {
-            "matchHost": "quay.io",
-            "description": "Encrypted creds for quay.io (Rapidfort), stored in Mend organization credentials, see https://docs.renovatebot.com/mend-hosted/credentials/#managing-secrets-via-the-web-ui",
-            "username": "{{ secrets.RAPIDFORT_USERNAME }}",
-            "password": "{{ secrets.RAPIDFORT_PASSWORD }}"
-        },
-        {
-            "matchHost": "ghcr.io",
-            "hostType": "docker",
-            "description": "Encrypted creds for ghcr.io, scoped to this Github org using: https://docs.renovatebot.com/getting-started/migrating-secrets/#migrate-your-secrets-in-encrypted-form",
-            "username": "renovate",
-            "password": "{{ secrets.DEFENSEUNICORNS_PACKAGE_READ_PAT }}"
-        }
-    ],
     "customManagers": [
         // Matches github-tags pointing to items in githubusercontent (i.e. https://github.com/defenseunicorns/uds-core/blob/e45de0e5917a2ca6c3e30e593e2d9a8d393849a9/.vscode/settings.json#L12)
         {
