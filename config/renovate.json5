@@ -37,6 +37,12 @@
             ".github"
         ]
     },
+    "packageRules": [
+        {
+            "matchPackageNames": ["!*defenseunicorns/*", "!*zarf-dev/*"],
+            "minimumReleaseAge": "3 days"
+        }
+    ],
     "hostRules": [
         {
             "matchHost": "registry1.dso.mil",
