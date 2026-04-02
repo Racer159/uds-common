@@ -40,7 +40,6 @@
     "packageRules": [
         {
             "matchDatasources": ["crate", "rubygems", "docker", "github-releases", "terraform-provider", "github-tags", "go", "maven", "npm", "nuget", "pypi", "jsr"],
-            "matchPackageNames": ["!defenseunicorns/**", "!zarf-dev/**", "!github.com/defenseunicorns/**", "!github.com/zarf-dev/**", "!ghcr.io/defenseunicorns/*", "!ghcr.io/zarf-dev/*", "!registry.defenseunicorns.com/**"],
             "minimumReleaseAge": "3 days"
         }
     ],
